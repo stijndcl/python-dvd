@@ -1,3 +1,4 @@
+import argparse
 import curses
 import enum
 import logging
@@ -157,8 +158,18 @@ def main(stdscr):
         logo.display()
 
         stdscr.refresh()
-        time.sleep(1)
+        time.sleep(args.delay / 1000)
         logo.timestep()
 
 
-curses.wrapper(main)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--delay",
+        default=1000,
+        type=int,
+        help="The delay between frame updates (in milliseconds)",
+    )
+    args = parser.parse_args()
+
+    curses.wrapper(main)
