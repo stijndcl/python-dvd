@@ -54,9 +54,10 @@ class Direction(enum.Enum):
 
 
 class Logo:
-    direction: Direction = Direction.RIGHT_DOWN
-    current_row = 0
-    current_col = 0
+    direction: Direction
+
+    current_row: int
+    current_col: int
 
     rows: int
     cols: int
@@ -71,6 +72,10 @@ class Logo:
 
         self.max_row = self.rows - len(dvd_string)
         self.max_col = self.cols - len(dvd_string[0])
+
+        self.current_row = random.randint(1, self.max_row - 1)
+        self.current_col = random.randint(1, self.max_col - 1)
+        self.direction = random.choice([d for d in Direction])
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_CYAN, curses.COLOR_BLACK)
