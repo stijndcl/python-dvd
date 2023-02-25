@@ -1,9 +1,9 @@
 import argparse
+import contextlib
 import curses
 import enum
 import logging
 import random
-import time
 
 dvd_string = [
     "     @@@@@@@@@@@@@@@@@@@@@@@@          @@@@@@@@@@@@@@@@@@@     ",
@@ -66,14 +66,18 @@ class Logo:
 
     def __init__(self, stdscr):
         self.rows, self.cols = stdscr.getmaxyx()
+
         self.stdscr = stdscr
 
         self.max_row = self.rows - len(dvd_string)
         self.max_col = self.cols - len(dvd_string[0])
 
-        self.current_row = random.randint(3, self.max_row - 3)
-        self.current_col = random.randint(3, self.max_col - 3)
-        self.direction = random.choice([d for d in Direction])
+        # self.current_row = random.randint(3, self.max_row - 3)
+        # self.current_col = random.randint(3, self.max_col - 3)
+        # self.direction = random.choice([d for d in Direction])
+        self.current_row = self.max_row - 10
+        self.current_col = self.max_col - 10
+        self.direction = Direction.RIGHT_DOWN
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_CYAN, curses.COLOR_BLACK)
@@ -117,6 +121,7 @@ class Logo:
 
     def timestep(self):
         self.stdscr.clear()
+
         new_col, new_row = self._movement_update()
         new_direction = self._direction_update(col=new_col, row=new_row)
 
@@ -132,7 +137,6 @@ class Logo:
             )
             if second_update.value != new_direction.value:
                 new_direction = second_update
-            else:
                 new_col, new_row = self._movement_update(direction=new_direction)
 
         self.direction = new_direction
@@ -141,7 +145,11 @@ class Logo:
 
     def display(self):
         for i, line in enumerate(dvd_string):
-            self.stdscr.addstr(self.current_row + i, self.current_col, line)
+            # When writing to the bottom-right position of the screen,
+            # curses raises an incorrect error because the cursor is now out of bounds
+            # This doesn't matter, so ignore it
+            with contextlib.suppress(curses.error):
+                self.stdscr.addstr(self.current_row + i, self.current_col, line)
 
 
 def main(stdscr):
@@ -155,7 +163,7 @@ def main(stdscr):
         logo.display()
 
         stdscr.refresh()
-        time.sleep(args.delay / 1000)
+        curses.delay_output(args.delay)
         logo.timestep()
 
 
