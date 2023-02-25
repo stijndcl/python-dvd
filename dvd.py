@@ -2,7 +2,6 @@ import argparse
 import contextlib
 import curses
 import enum
-import logging
 import random
 
 dvd_string = [
@@ -18,10 +17,6 @@ dvd_string = [
     "@@@@@@@@@@@@@@@@@@@@@@@            @@@@@@@@@@@@@@@@@@@@@@@@    ",
     "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@       ",
 ]
-
-
-logging.basicConfig(filename="dvd.log", level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class Direction(enum.Enum):
