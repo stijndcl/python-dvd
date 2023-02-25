@@ -1,6 +1,8 @@
 # python-dvd
 Python tool that bounces a DVD logo around your terminal
 
+![GIF of the tool](./assets/dvd-logo.gif)
+
 ## Usage
 
 The project doesn't have any dependencies, so you can just run it directly without installing anything:

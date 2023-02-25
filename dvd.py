@@ -168,7 +168,7 @@ if __name__ == "__main__":
         "--delay",
         default=1000,
         type=int,
-        help="The delay between frame updates (in milliseconds)",
+        help="Delay between frame updates (in milliseconds)",
     )
     args = parser.parse_args()
 
