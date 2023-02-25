@@ -67,12 +67,9 @@ class Logo:
         self.max_row = self.rows - len(dvd_string)
         self.max_col = self.cols - len(dvd_string[0])
 
-        # self.current_row = random.randint(3, self.max_row - 3)
-        # self.current_col = random.randint(3, self.max_col - 3)
-        # self.direction = random.choice([d for d in Direction])
-        self.current_row = self.max_row - 10
-        self.current_col = self.max_col - 10
-        self.direction = Direction.RIGHT_DOWN
+        self.current_row = random.randint(3, self.max_row - 3)
+        self.current_col = random.randint(3, self.max_col - 3)
+        self.direction = random.choice([d for d in Direction])
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_CYAN, curses.COLOR_BLACK)
